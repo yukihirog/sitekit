@@ -1,0 +1,45 @@
+@charset 'utf-8';
+@import '../_env.scss';
+
+.button-block {
+}
+
+.button-list {
+	> li {
+	}
+}
+
+
+%button {
+	display: inline-block;
+}
+
+%button_input {
+	appearance: none;
+	display: inline;
+	color: inherit;
+	font-family: inherit;
+}
+
+%button_link {
+	text-decoration: none;
+}
+
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+button {
+	@extend %button_input;
+}
+
+a.button {
+	@extend %button_link;
+}
+
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+button,
+.button {
+	@extend %button;
+}
