@@ -1,0 +1,49 @@
+@charset 'utf-8';
+@import '_env.scss';
+
+.frame {
+}
+
+.site-header {
+	.title {
+	}
+
+	nav {
+		ul {
+			> li {
+			}
+
+			a {
+				&.current {
+				}
+			}
+		}
+	}
+}
+
+.site-body {
+	max-width: $maxwidth_content;
+}
+
+.site-footer {
+	.copyright {
+		small {
+			font-size: 100%;
+		}
+	}
+}
+
+
+.page {
+	> .header {
+		.title {
+		}
+	}
+
+
+	> .body {
+	}
+
+	> .footer {
+	}
+}
