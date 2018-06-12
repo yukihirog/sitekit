@@ -1,8 +1,10 @@
-let gulp           = require('gulp'),
+var gulp           = require('gulp'),
     plumber        = require('gulp-plumber'),
     sourcemaps     = require('gulp-sourcemaps'),
+    concat         = require('gulp-concat'),
     sass           = require('gulp-sass'),
-    uglifyjs       = require('gulp-uglifyjs'),
+    sassGlob       = require('gulp-sass-glob'),
+    uglify         = require('gulp-uglify'),
     imagemin       = require('gulp-imagemin'),
     changed        = require('gulp-changed'),
     browserSync    = require('browser-sync').create(),
@@ -14,48 +16,54 @@ let gulp           = require('gulp'),
 ;
 
 
-gulp.task('uglify', function() {
+gulp.task('uglify', function (done) {
   gulp
     .src(path.dev.js)
     .pipe(plumber())
+    .pipe(sourcemaps.init())
+    .pipe(concat('common.js'))
     .pipe(
-      uglifyjs(
-        'common.js',
+      uglify(
         {
-          outSourceMap: true,
           output: {
             comments: "@license"
           }
         }
       )
     )
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(path.dist.js))
   ;
+  done();
 });
 
-gulp.task('uglify:watch', function () {
-  gulp.watch(path.dev.js, ['uglify']);
+gulp.task('uglify:watch', function (done) {
+  gulp.watch(path.dev.js, gulp.series('uglify'));
+  done();
 });
 
 
 
-gulp.task('sass', function() {
+gulp.task('sass', function (done) {
   gulp.src(path.dev.css)
     .pipe(plumber())
     .pipe(sourcemaps.init())
+    .pipe(sassGlob())
     .pipe(sass({noCache: true, outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(path.dist.css))
   ;
+  done();
 });
 
-gulp.task('sass:watch', function () {
-  gulp.watch(path.dev.css, ['sass']);
+gulp.task('sass:watch', function (done) {
+  gulp.watch(path.dev.css, gulp.series('sass'));
+  done();
 });
 
 
 
-gulp.task('imagemin', function() {
+gulp.task('imagemin', function (done) {
   gulp
     .src(path.dev.img)
     .pipe(plumber())
@@ -65,63 +73,68 @@ gulp.task('imagemin', function() {
     )
     .pipe(gulp.dest(path.dist.img))
   ;
+  done();
 });
 
-gulp.task('imagemin:watch', function () {
-  gulp.watch(path.dev.img, ['imagemin']);
+gulp.task('imagemin:watch', function (done) {
+  gulp.watch(path.dev.img, gulp.series('imagemin'));
+  done();
 });
 
 
 
-gulp.task('browser-sync', function () {
+gulp.task('browser-sync', function (done) {
   browserSync.init(
     Object.assign(
       bsConfigBase,
       bsConfigUser
     )
   );
+  done();
 });
 
-gulp.task('browser-sync-reload', function () {
+gulp.task('browser-sync-reload', function (done) {
   browserSync.reload();
+  done();
 });
 
-gulp.task('browser-sync:watch', function () {
+gulp.task('browser-sync:watch', function (done) {
   gulp.watch(
     [
       path.dev.dummy + '**/*',
       path_base.dist + '**/*'
     ],
-    ['browser-sync-reload']
+    gulp.series('browser-sync-reload')
   );
+  done();
 });
 
 
 
 gulp.task(
   'process',
-  [
+  gulp.series(
     'uglify',
     'sass',
     'imagemin',
     'browser-sync'
-  ]
+  )
 );
 
 gulp.task(
   'watch',
-  [
+  gulp.series(
     'uglify:watch',
     'sass:watch',
     'imagemin:watch',
     'browser-sync:watch'
-  ]
+  )
 );
 
 gulp.task(
   'default',
-  [
+  gulp.series(
     'process',
     'watch'
-  ]
+  )
 );
