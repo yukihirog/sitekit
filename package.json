@@ -8,16 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yukihirog/LBI.git"
+    "url": "git+https://github.com/yukihirog/sitekit.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yukihirog/LBI/issues"
+    "url": "https://github.com/yukihirog/sitekit/issues"
   },
-  "homepage": "https://github.com/yukihirog/LBI#readme",
+  "homepage": "https://github.com/yukihirog/sitekit#readme",
   "devDependencies": {
-    "browser-sync": "^2.24.4",
+    "browser-sync": "^2.24.5",
     "browsersync-ssi": "^0.2.4",
     "gulp": "^4.0.0",
     "gulp-changed": "^3.2.0",
