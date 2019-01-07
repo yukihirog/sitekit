@@ -10,8 +10,8 @@
         |   +- browsersync.user.js : ローカルサーバーのユーザー設定
         |   +- path.js : パスの設定
         |
-        +- gulp.bat : 開発環境の起動コマンド（Windows）
-        +- gulp.command : 開発環境の起動コマンド（Mac）
+        +- run.bat : 開発環境の起動コマンド（Windows）
+        +- run.command : 開発環境の起動コマンド（Mac）
         |
         +- gulpfile.js : 開発環境の実行内容を記述したファイル
         |
@@ -85,11 +85,12 @@ npm update -g npm
 #### gulpの実行
 以下をダブルクリックしてください。
 
-    Windows: gulp.bat
-    Mac: gulp.command
+    Windows: run.bat
+    Mac: run.command
 
 コマンドラインのウィンドウとブラウザのウィンドウが開きます。
 
+http://localhost:3000/
 
 #### ローカルサーバー（Browsersync）の設定
 
