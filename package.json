@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/yukihirog/sitekit#readme",
   "devDependencies": {
-    "browser-sync": "^2.26.13",
+    "browser-sync": "^2.26.14",
     "browsersync-ssi": "^0.2.4",
     "gulp": "^4.0.2",
     "gulp-changed": "^3.2.0",
