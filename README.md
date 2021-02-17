@@ -30,23 +30,22 @@
         +- package-lock.json : 開発用モジュールの指定ファイル
         |
         +- resources/ : CSS、JSなどの開発用ファイル
-            +- _dummy/ : ダミー画像など、表示確認用ファイル
-            |
-            +- img/ : 画像
-            |
-            +- css/ : CSS（Sassのscss形式）
-            |   +- _element.scss : HTMLの基本要素のスタイル
-            |   +- _env.scss : 変数などの共通設定ファイル（フォントの指定、色など）
-            |   +- _frame.scss : ヘッダー、フッター、ページ枠組みなどの共通スタイル
-            |   +- _module.scss : コンポーネントのimportファイル
-            |   +- common.scss : サイト共通ヘッダー・フッターなどのスタイル
-            |   +- module/ : 共通コンポーネントのスタイル
-            |   +- page/ : 個別テンプレートのスタイル
-            |
-            +- js/ : JS
-                +- vendor/ : jQuery等の外部ライブラリ
-                +- components/ : サイト内のコンポーネント用
-                +- main/ : メインJS
+            +- common/ : サイト共通のCSS、JS、画像など（開発用ファイル）
+                +- img/ : 画像
+                |
+                +- css/ : CSS（Sassのscss形式）
+                |   +- _element.scss : HTMLの基本要素のスタイル
+                |   +- _env.scss : 変数などの共通設定ファイル（フォントの指定、色など）
+                |   +- _frame.scss : ヘッダー、フッター、ページ枠組みなどの共通スタイル
+                |   +- _module.scss : コンポーネントのimportファイル
+                |   +- common.scss : サイト共通ヘッダー・フッターなどのスタイル
+                |   +- module/ : 共通コンポーネントのスタイル
+                |   +- page/ : 個別テンプレートのスタイル
+                |
+                +- js/ : JS
+                    +- vendor/ : jQuery等の外部ライブラリ
+                    +- components/ : サイト内のコンポーネント用
+                    +- main/ : メインJS
 
 
 ## 開発環境
@@ -63,7 +62,7 @@ https://nodejs.org/
 以下のコマンドで最新版にアップデートされます。
 
 ```
-n latest
+n lts
 ```
 
 ```

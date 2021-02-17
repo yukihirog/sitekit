@@ -1,23 +1,27 @@
-let path_base = {
+const path_base = {
   dev  : 'resources/',
   dist : 'html/'
 };
 
-let path = {
+const path = {
   dev : {
-    dummy : path_base.dev + '_dummy/',
-    css : path_base.dev + 'css/**/*.scss',
-    img : path_base.dev + 'img/**/*.+(jpg|jpeg|png|gif|svg)',
-    js  : [
-      path_base.dev + 'js/vendor/*.js',
-      path_base.dev + 'js/components/*.js',
-      path_base.dev + 'js/main/*.js'
+    css      : path_base.dev + '**/*.scss',
+    img      : path_base.dev + '**/*.+(jpg|jpeg|png|gif|svg)',
+    js       : [
+      path_base.dev + '**/*.js',
+      '!' + path_base.dev + 'common/js/**/*.js'
+    ],
+    commonJS : [
+      path_base.dev + 'common/js/vendor/**/*.js',
+      path_base.dev + 'common/js/components/**/*.js',
+      path_base.dev + 'common/js/main/**/*.js'
     ]
   },
   dist : {
-    css : path_base.dist + 'common/css/',
-    img : path_base.dist + 'common/img/',
-    js  : path_base.dist + 'common/js/'
+    css      : path_base.dist,
+    img      : path_base.dist,
+    js       : path_base.dist,
+    commonJS : path_base.dist + 'common/js/'
   }
 };
 

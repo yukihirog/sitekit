@@ -1,4 +1,6 @@
-var gulp           = require('gulp'),
+'use strict';
+
+const gulp         = require('gulp'),
     plumber        = require('gulp-plumber'),
     sourcemaps     = require('gulp-sourcemaps'),
     concat         = require('gulp-concat'),
@@ -16,12 +18,37 @@ var gulp           = require('gulp'),
 ;
 
 
+gulp.task('uglifyCommon', function (done) {
+  gulp
+    .src(path.dev.commonJS)
+    .pipe(plumber())
+    .pipe(sourcemaps.init())
+    .pipe(concat('common.js'))
+    .pipe(
+      uglify(
+        {
+          output: {
+            comments: "@license"
+          }
+        }
+      )
+    )
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(path.dist.commonJS))
+  ;
+  done();
+});
+
+gulp.task('uglifyCommon:watch', function (done) {
+  gulp.watch(path.dev.commonJS, gulp.series('uglifyCommon'));
+  done();
+});
+
 gulp.task('uglify', function (done) {
   gulp
     .src(path.dev.js)
     .pipe(plumber())
     .pipe(sourcemaps.init())
-    .pipe(concat('common.js'))
     .pipe(
       uglify(
         {
@@ -101,7 +128,6 @@ gulp.task('browser-sync-reload', function (done) {
 gulp.task('browser-sync:watch', function (done) {
   gulp.watch(
     [
-      path.dev.dummy + '**/*',
       path_base.dist + '**/*'
     ],
     gulp.series('browser-sync-reload')
@@ -114,6 +140,7 @@ gulp.task('browser-sync:watch', function (done) {
 gulp.task(
   'process',
   gulp.series(
+    'uglifyCommon',
     'uglify',
     'sass',
     'imagemin',
@@ -124,6 +151,7 @@ gulp.task(
 gulp.task(
   'watch',
   gulp.series(
+    'uglifyCommon:watch',
     'uglify:watch',
     'sass:watch',
     'imagemin:watch',
