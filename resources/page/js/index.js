@@ -1,8 +1,6 @@
 'use strict';
 
-jQuery(function($){
-	/*
-	var hello = new HelloWorld();
+jQuery(($) => {
+	let hello = new HelloWorld();
 	hello.echo();
-	*/
 });

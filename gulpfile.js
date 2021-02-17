@@ -7,6 +7,7 @@ const gulp         = require('gulp'),
     sass           = require('gulp-sass'),
     sassGlob       = require('gulp-sass-glob'),
     uglify         = require('gulp-uglify'),
+    babel          = require('gulp-babel'),
     imagemin       = require('gulp-imagemin'),
     changed        = require('gulp-changed'),
     browserSync    = require('browser-sync').create(),
@@ -23,6 +24,7 @@ gulp.task('uglifyCommon', function (done) {
     .src(path.dev.commonJS)
     .pipe(plumber())
     .pipe(sourcemaps.init())
+    .pipe(babel({ presets: ['@babel/env'] }))
     .pipe(concat('common.js'))
     .pipe(
       uglify(
@@ -49,6 +51,7 @@ gulp.task('uglify', function (done) {
     .src(path.dev.js)
     .pipe(plumber())
     .pipe(sourcemaps.init())
+    .pipe(babel({ presets: ['@babel/env'] }))
     .pipe(
       uglify(
         {

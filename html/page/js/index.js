@@ -1,6 +1,2 @@
-"use strict";jQuery(function(t){
-/*
-	var hello = new HelloWorld();
-	hello.echo();
-	*/});
+"use strict";jQuery(function(e){(new HelloWorld).echo()});
 //# sourceMappingURL=index.js.map
