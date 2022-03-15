@@ -13,7 +13,7 @@ export default {
     errorHandler: function(err) {
       console.log('%s%s%s',
         colors.red,
-        err.messageFormatted,
+        err.message,
         colors.reset
       );
       this.emit('end');
