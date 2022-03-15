@@ -1,1 +1,0 @@
-{"version":3,"sources":["page/js/index.js"],"names":["jQuery","$","HelloWorld","echo"],"mappings":"aAEAA,OAAO,SAAAC,IACG,IAAGC,YACPC","file":"index.js","sourcesContent":["'use strict';\n\njQuery(($) => {\n\tlet hello = new HelloWorld();\n\thello.echo();\n});\n"]}
