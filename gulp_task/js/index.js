@@ -8,7 +8,7 @@ import PluginError from 'plugin-error';
 import uglify from 'gulp-uglify';
 import config from '../config';
 
-const src = config.src + '/**/*.js';
+const src = config.src + '/**/[^_]*.js';
 
 export function build_js() {
   return gulp

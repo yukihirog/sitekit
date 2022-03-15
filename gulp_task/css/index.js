@@ -5,7 +5,7 @@ import cleanCss from 'gulp-clean-css';
 import autoprefixer from 'gulp-autoprefixer';
 import config from '../config';
 
-const src = config.src + '/**/*.css';
+const src = config.src + '/**/[^_]*.css';
 
 export function build_css() {
   return gulp.src(src, { ignore: config.vendor, usesourcemaps: true })

@@ -4,7 +4,7 @@ import cached from 'gulp-cached';
 import imagemin from 'gulp-imagemin';
 import config from '../config';
 
-const src = config.src + '/**/*.{jpeg,jpg,png,gif,svg}';
+const src = config.src + '/**/[^_]*.{jpeg,jpg,png,gif,svg}';
 
 export function build_image() {
   return gulp.src(src, { ignore: config.vendor })

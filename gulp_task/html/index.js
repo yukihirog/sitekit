@@ -3,7 +3,7 @@ import plumber from 'gulp-plumber';
 import cached from 'gulp-cached';
 import config from '../config';
 
-const src = config.src + '/**/*.{shtml,shtm,html,htm}';
+const src = config.src + '/**/[^_]*.{shtml,shtm,html,htm}';
 
 export function build_html() {
   return gulp.src(src, { ignore: config.vendor })
