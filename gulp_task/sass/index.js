@@ -12,7 +12,7 @@ export function build_sass() {
   return gulp.src(src, { ignore: config.vendor, usesourcemaps: true })
     .pipe(plumber(config.plumberHandler))
     .pipe(cached('sass'))
-    .pipe(sass({ outputStyle: 'compressed' }))
+    .pipe(sass.sync({ outputStyle: 'compressed' }))
     .pipe(gulp.dest(config.dest, { usesourcemaps: '.' }))
   ;
 }
