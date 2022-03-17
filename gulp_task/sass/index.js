@@ -9,7 +9,7 @@ const src = config.src + '/**/*.{sass,scss}';
 
 export function build_sass() {
   const sass = gulpSass(dartSass);
-  return gulp.src(src, { ignore: config.vendor, usesourcemaps: true })
+  return gulp.src(src, { usesourcemaps: true })
     .pipe(plumber(config.plumberHandler))
     .pipe(cached('sass'))
     .pipe(sass.sync({ outputStyle: 'compressed' }))
@@ -18,5 +18,5 @@ export function build_sass() {
 }
 
 export function watch_sass() {
-  return gulp.watch(src, { ignored: config.vendor }, build_sass);
+  return gulp.watch(src, build_sass);
 }

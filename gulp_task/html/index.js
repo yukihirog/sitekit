@@ -6,7 +6,7 @@ import config from '../config';
 const src = config.src + '/**/[^_]*.{shtml,shtm,html,htm}';
 
 export function build_html() {
-  return gulp.src(src, { ignore: config.vendor })
+  return gulp.src(src)
     .pipe(plumber(config.plumberHandler))
     .pipe(cached('html'))
     .pipe(gulp.dest(config.dest))

@@ -8,7 +8,7 @@ import config from '../config';
 const src = config.src + '/**/[^_]*.css';
 
 export function build_css() {
-  return gulp.src(src, { ignore: config.vendor, usesourcemaps: true })
+  return gulp.src(src, { usesourcemaps: true })
     .pipe(plumber(config.plumberHandler))
     .pipe(cached('css'))
     .pipe(autoprefixer())
@@ -18,5 +18,5 @@ export function build_css() {
 }
 
 export function watch_css() {
-  return gulp.watch(src, { ignored: config.vendor }, build_css);
+  return gulp.watch(src, build_css);
 }

@@ -7,7 +7,7 @@ import config from '../config';
 const src = config.src + '/**/[^_]*.{jpeg,jpg,png,gif,svg}';
 
 export function build_image() {
-  return gulp.src(src, { ignore: config.vendor })
+  return gulp.src(src)
     .pipe(plumber(config.plumberHandler))
     .pipe(cached('image'))
     .pipe(imagemin())
@@ -16,5 +16,5 @@ export function build_image() {
 }
 
 export function watch_image() {
-  return gulp.watch(src, { ignored: config.vendor }, build_image);
+  return gulp.watch(src, build_image);
 }

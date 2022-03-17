@@ -12,7 +12,7 @@ const src = config.src + '/**/[^_]*.js';
 
 export function build_js() {
   return gulp
-    .src(src, { ignore: config.vendor, usesourcemaps: true })
+    .src(src, { usesourcemaps: true })
     .pipe(plumber(config.plumberHandler))
 /* cachedが効いているとモジュール更新時にbrowserifyで親JSが更新されないので、対策できるまではコメントアウト
     .pipe(cached('js'))
@@ -45,5 +45,5 @@ export function build_js() {
 }
 
 export function watch_js() {
-  return gulp.watch(src, { ignored: config.vendor }, build_js);
+  return gulp.watch(src, build_js);
 }

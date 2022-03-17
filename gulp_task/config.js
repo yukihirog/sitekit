@@ -7,8 +7,8 @@ const colors = {
 
 export default {
   src: path.resolve('src'),
+  fixedsrc: path.resolve('fixedsrc'),
   dest: path.resolve('dest'),
-  vendor: path.resolve('src') + '/**/vendor/**/*',
   plumberHandler: {
     errorHandler: function(err) {
       console.log('%s%s%s',
