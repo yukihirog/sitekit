@@ -6,7 +6,7 @@ import config from '../config';
 const src = config.src + '/**/[^_]*.!(shtml|shtm|html|htm|sass|scss|css|js|jpeg|jpg|png|gif|svg)';
 
 export function build_other() {
-  return gulp.src(src)
+  return gulp.src(src, { dot: true })
     .pipe(plumber(config.plumberHandler))
     .pipe(cached('other'))
     .pipe(gulp.dest(config.dest))

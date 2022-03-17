@@ -6,7 +6,7 @@ const src = config.src + '/**/*';
 const fixedsrc = config.fixedsrc + '/**/*';
 
 export function deploy_src() {
-  return gulp.src(src)
+  return gulp.src(src, { dot: true })
     .pipe(plumber(config.plumberHandler))
     .pipe(gulp.dest(config.dest))
   ;

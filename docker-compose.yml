@@ -2,6 +2,7 @@ version: "3"
 services:
   project_db:
     build: ./docker/db
+    platform: linux/x86_64
     volumes:
       - ./docker/db/data:/var/lib/mysql
     restart: always
@@ -13,6 +14,7 @@ services:
 
   http:
     build: ./docker/http
+    platform: linux/x86_64
     volumes:
       - ./dest:/var/www/html
     ports:
@@ -20,9 +22,10 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    platform: linux/x86_64
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=mysql
+      - PMA_HOST=project_db
       - PMA_USER=root
     links:
       - project_db

@@ -27,7 +27,15 @@ export const watch = gulp.series(
   build,
   gulp.parallel(
     ...taskGroups.watch,
-    task.preview
+    taskGroups.preview.preview_plain
+  )
+)
+
+export const docker = gulp.series(
+  build,
+  gulp.parallel(
+    ...taskGroups.watch,
+    taskGroups.preview.preview_docker
   )
 )
 
