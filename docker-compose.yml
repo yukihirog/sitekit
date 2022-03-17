@@ -1,0 +1,32 @@
+version: "3"
+services:
+  project_db:
+    build: ./docker/db
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=project_db_wp
+      - MYSQL_USER=db_user
+      - MYSQL_PASSWORD=db_user_pass
+
+  http:
+    build: ./docker/http
+    volumes:
+      - ./dest:/var/www/html
+    ports:
+      - '80:80'
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+    links:
+      - project_db
+    ports:
+      - 4040:80
+    volumes:
+      - ./phpmyadmin/sessions:/sessions
