@@ -31,4 +31,4 @@ services:
     ports:
       - ${PHPMYADMIN_EXTERNAL_PORT}:${PHPMYADMIN_INTERNAL_PORT}
     volumes:
-      - ./phpmyadmin/sessions:/sessions
+      - ./docker/phpmyadmin/sessions:/sessions
