@@ -2,14 +2,22 @@ import fs from 'fs';
 import cached from 'gulp-cached';
 import config from '../config';
 
-export function clear(done) {
+function clear(dir) {
   cached.caches = {};
 
-  if (fs.existsSync(config.dest)) {
-    fs.rmSync(config.dest, { recursive: true });
+  if (fs.existsSync(dir)) {
+    fs.rmSync(dir, { recursive: true, force: true });
   }
 
-  fs.mkdirSync(config.dest);
+  fs.mkdirSync(dir);
+};
 
+export function clear_preview(done) {
+  clear(config.path.preview);
+  done();
+}
+
+export function clear_release(done) {
+  clear(config.path.release);
   done();
 }

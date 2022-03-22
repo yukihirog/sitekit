@@ -2,19 +2,12 @@ import gulp from 'gulp';
 import plumber from 'gulp-plumber';
 import config from '../config';
 
-const src = config.src + '/**/*';
-const fixedsrc = config.fixedsrc + '/**/*';
+const src = config.path.src + '/**/*';
+const fixed = config.path.fixed + '/**/*';
 
-export function deploy_src() {
-  return gulp.src(src, { dot: true })
+export function deploy_fixed() {
+  return gulp.src(fixed, { dot: true, ignore: config.ignore.deploy })
     .pipe(plumber(config.plumberHandler))
-    .pipe(gulp.dest(config.dest))
-  ;
-}
-
-export function deploy_fixedsrc() {
-  return gulp.src(fixedsrc, { dot: true })
-    .pipe(plumber(config.plumberHandler))
-    .pipe(gulp.dest(config.dest))
+    .pipe(gulp.dest(config.path.preview))
   ;
 }

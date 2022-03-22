@@ -1,3 +1,7 @@
+03_preview/
+docker/db/data/
+docker/phpmyadmin/sessions/
+
 # Needless
 Thumbs.db
 .DS_Store

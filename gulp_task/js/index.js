@@ -8,11 +8,11 @@ import PluginError from 'plugin-error';
 import uglify from 'gulp-uglify';
 import config from '../config';
 
-const src = config.src + '/**/[^_]*.js';
+const src = config.path.src + '/**/[^_]*.js';
 
-export function build_js() {
+function _process(outputDir, option) {
   return gulp
-    .src(src, { usesourcemaps: true })
+    .src(src, option)
     .pipe(plumber(config.plumberHandler))
 /* cachedが効いているとモジュール更新時にbrowserifyで親JSが更新されないので、対策できるまではコメントアウト
     .pipe(cached('js'))
@@ -40,10 +40,18 @@ export function build_js() {
     .pipe(uglify({
       output: { comments: 'some' }
     }))
-    .pipe(gulp.dest(config.dest, { usesourcemaps: '.' }))
+    .pipe(gulp.dest(outputDir, { usesourcemaps: '.' }))
   ;
+};
+
+export function build_js() {
+  return _process(config.path.preview, { usesourcemaps: true, ignore: config.ignore.build });
+}
+
+export function release_js() {
+  return _process(config.path.release, { usesourcemaps: true, ignore: config.ignore.release });
 }
 
 export function watch_js() {
-  return gulp.watch(src, build_js);
+  return gulp.watch(src, { ignore: config.ignore.watch }, build_js);
 }

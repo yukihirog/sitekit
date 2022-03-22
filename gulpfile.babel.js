@@ -17,7 +17,7 @@ for (const key in task) {
 export * from './gulp_task'
 
 export const build = gulp.series(
-  taskGroups.deploy.deploy_fixedsrc,
+  taskGroups.deploy.deploy_fixed,
   gulp.parallel(
     ...taskGroups.build
   )
@@ -40,11 +40,17 @@ export const docker = gulp.series(
 )
 
 export const deploy = gulp.series(
-  taskGroups.clear.clear,
+  taskGroups.clear.clear_preview,
   build
 )
 
+export const release = gulp.series(
+  taskGroups.clear.clear_release,
+  gulp.parallel(
+    ...taskGroups.release
+  )
+)
+
 export default gulp.series(
-  taskGroups.clear.clear,
-  build
+  watch
 )

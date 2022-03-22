@@ -16,7 +16,7 @@ services:
     build: ./docker/http
     platform: linux/x86_64
     volumes:
-      - ./dest:/var/www/html
+      - ./03_preview:/var/www/html
     ports:
       - '80:80'
 

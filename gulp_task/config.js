@@ -8,9 +8,21 @@ const colors = {
 }
 
 export default {
-  src: path.resolve(cwd, 'src'),
-  fixedsrc: path.resolve(cwd, 'fixed'),
-  dest: path.resolve(cwd, 'dest'),
+  path: {
+    src: path.resolve(cwd, '01_src'),
+    fixed: path.resolve(cwd, '02_fixed'),
+    preview: path.resolve(cwd, '03_preview'),
+    release: path.resolve(cwd, '04_release')
+  },
+  ignore: {
+    build: [],
+    watch: [],
+    deploy: [],
+    release: [
+      '**/.htaccess',
+      '**/wp-config.php',
+    ]
+  },
   plumberHandler: {
     errorHandler: function(err) {
       console.log('%s%s%s',

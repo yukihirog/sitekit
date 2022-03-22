@@ -7,7 +7,7 @@ export function preview_plain(done) {
   previewer.init({
     watch: true,
     server: {
-      baseDir: config.dest,
+      baseDir: config.path.preview,
       index: 'index.html'
     },
     notify: false,
