@@ -3,126 +3,132 @@
 ## ファイル構成
 
     (git repository)
+        +- .env : Dockerとgulpの共有設定ファイル(最初に手作業で作成する)
+        +- .env.sample : .envを作成する際の雛形
         +- .gitignore : Git登録の除外ファイル指定
         |
-        +- config/ : 開発環境の設定
-        |   +- browsersync.base.js : ローカルサーバー（Browsersync）基本設定
-        |   +- browsersync.user.js : ローカルサーバーのユーザー設定
-        |   +- path.js : パスの設定
+        +- 01_src/ : 開発用ファイルのディレクトリ
+        +- 02_fixed/ : 開発時に編集しないファイルのディレクトリ
+        +- 03_preview/ : ローカルプレビュー用のディレクトリ(01_srcと02_fixedから作成)
+        +- 04_release/ : 開発終了時に01_srcから作成されるディレクトリ
         |
-        +- run.bat : 開発環境の起動コマンド（Windows）
-        +- run.command : 開発環境の起動コマンド（Mac）
+        +- docker/ : Docker用のディレクトリ
+        +- docker-compose.yml : Docker用の設定ファイル(最初にnpm run start initfilesで作成する)
+        +- docker-compose.yml.base : docker-compose.ymlを生成するテンプレート
         |
-        +- gulpfile.js : 開発環境の実行内容を記述したファイル
+        +- gulp_task/ : gulp用のタスクと設定のディレクトリ
+        +- gulpfile.babel.js : 開発環境の実行内容を記述したファイル
+        +- index.js : nodeの実行ファイル(gulp-cliの呼び出し)
         |
-        +- html/ : テンプレートHTML等
-        |   +- common/ : サイト共通のCSS、JS、画像など（生成後のCSS、JS、画像）
-        |       +- css/ : CSS
-        |       +- img/ : 画像
-        |       +- js/ : JS
-        |
-        +- install.bat : 開発環境のインストールコマンド（Windows）
-        +- install.command : 開発環境のインストールコマンド（Mac）
+        +- LICENSE : ライセンス
         |
         +- node_modules/ : 開発用モジュール（install.bat/install.commandを実行時に作成されます）
         |
-        +- package.json : 開発用モジュールの指定ファイル
         +- package-lock.json : 開発用モジュールの指定ファイル
+        +- package.json : 開発用モジュールの指定ファイル
         |
-        +- resources/ : CSS、JSなどの開発用ファイル
-            +- common/ : サイト共通のCSS、JS、画像など（開発用ファイル）
-                +- img/ : 画像
-                |
-                +- css/ : CSS（Sassのscss形式）
-                |   +- _element.scss : HTMLの基本要素のスタイル
-                |   +- _env.scss : 変数などの共通設定ファイル（フォントの指定、色など）
-                |   +- _frame.scss : ヘッダー、フッター、ページ枠組みなどの共通スタイル
-                |   +- _module.scss : コンポーネントのimportファイル
-                |   +- common.scss : サイト共通ヘッダー・フッターなどのスタイル
-                |   +- module/ : 共通コンポーネントのスタイル
-                |   +- page/ : 個別テンプレートのスタイル
-                |
-                +- js/ : JS
-                    +- vendor/ : jQuery等の外部ライブラリ
-                    +- components/ : サイト内のコンポーネント用
-                    +- main/ : メインJS
+        +- README.md : この説明ファイル
 
 
-## 開発環境
+## 導入方法
 
-### 導入方法
-
-#### 1. Node.jsのインストール
+### 1. Node.jsのインストール
 以下のサイトから「X.X.X LTS」をダウンロード＆インストールしてください。
 
 https://nodejs.org/
 
 
-##### 古いNode.jsが既にインストールされている場合
+#### 古いNode.jsが既にインストールされている場合
 以下のコマンドで最新版にアップデートされます。
-
-```
-n lts
-```
 
 ```
 npm update -g npm
 ```
 
-
-#### 2. 開発モジュールのインストール
-以下をダブルクリックしてください。
-
-    Windows: install.bat
-    Mac: install.command
-
-※モジュールのアップデートがあった場合はお知らせしますので、その際はこのインストール操作を再度、行ってください
+##### nが入っている場合
+```
+n lts
+```
 
 
-### 起動方法
-
-#### gulpの実行
-以下をダブルクリックしてください。
-
-    Windows: run.bat
-    Mac: run.command
-
-コマンドラインのウィンドウとブラウザのウィンドウが開きます。
-
-http://localhost:3000/
-
-#### ローカルサーバー（Browsersync）の設定
-
-下記にアクセスすると、UIからBrowsersyncの設定ができます。
-（起動時にリセットされます）
-
-http://localhost:3001/
-
-##### JSで設定する場合
-
-以下のファイルにBrowsersyncの設定を上書きすることができます。
-（毎回の起動時に適用されます）
-
-    config/browsersync.user.js
-
-オプションについては以下のページを参照してください。
-
-https://browsersync.io/docs/options
-
-※初期状態では「ghostMode: false」が設定されています。
+### 2. .envファイルの作成
+`.env.sample`ファイルをコピーして`.env`ファイルを作成してください。
+その後、自分の開発環境に合わせて編集してください。
 
 
-### 終了方法
+### 3. 開発モジュールのインストール
+コマンドラインから以下を実行してください。
 
-コマンドラインのウィンドウを閉じると開発環境の実行が止まります。
+    cd このディレクトリ
+    npm install
 
 
-### 起動後の挙動
-開発環境を起動しておくと、以下の対応が自動で行われます。
+### 4. Dockerのインストール
+以下のサイトから「Docker Desktop」をダウンロード＆インストールしてください。
+（Dockerを使わない場合は不要です）
 
-* 画像ファイルの編集時に自動デプロイ（ファイルサイズ圧縮）
-* scssファイルの編集時に自動デプロイ（Sass->CSSへの自動変換、ソースコード圧縮、mapファイルの作成）
-* jsファイルの編集時に自動デプロイ（ソースコード圧縮、mapファイルの作成）
-* HTML/CSS/JSファイルの編集時にブラウザを自動でリロード
-* localhostでSSI（include）を実行（HTMLファイルのinclude）
+https://www.docker.com/get-started/
+
+Dockerは必須ではありません。
+データベースやPHPが必要なければ、sitekitではBrowserSyncを使ったプレビューも可能です。
+
+
+### 5. Dockerコンテナの作成
+Dockerアプリを起動した後、コマンドラインから以下を実行してください。
+（Dockerを使わない場合は不要です）
+
+    docker compose up -d
+
+
+### 6. DockerコンテナのMySqlにログイン
+Dockerアプリからコンテナ内のMySQLサーバーのコマンドラインを起動してください。
+そのコマンドラインで以下を実行してください。
+（Dockerを使わない場合は不要です）
+
+    mysql -u root
+
+（現在のsitekitでは、一度ログインしておかないと接続できない問題があります）
+
+
+### 7. build
+コマンドラインから以下を実行してください。
+空のディレクトリや設定ファイルが作成されます。
+
+    npm run start initfiles
+
+
+### 8. fixedディレクトリに必要ファイルを格納する
+fixedディレクトリに編集しないが必要なファイルを格納してください。
+外部のJSライブラリやWordpress等の本体がこれに該当します。
+
+
+### 9. build
+コマンドラインから以下を実行してください。
+fixedディレクトリの内容がpreviewディレクトリにコピーされます。
+
+    npm run start build
+
+
+## 起動と終了
+
+### Dockerを使用する場合
+ + Dockerアプリを起動する
+ + `cd このディレクトリ`
+ + `docker compose up -d` （Dockerコンテナの起動）
+ + `npm run start docker` （プレビューとwatchの終了）
+   * この時点でブラウザが起動し、watch（ファイル更新の監視）が始まります。
+   * 01_srcディレクトリで開発を進めると、03_previewディレクトリに内容が反映されます。
+
+#### 終了
+ + コマンドラインでCtrl+Cを押す（プレビューとwatchの終了）
+ + `docker compose down` （Dockerコンテナの終了）
+
+### BrowserSyncを使用する場合（Dockerを使用しない場合）
+ + `cd このディレクトリ`
+ + `npm run start watch`
+   * この時点でブラウザが起動し、watch（ファイル更新の監視）が始まります。
+   * 01_srcディレクトリで開発を進めると、03_previewディレクトリに内容が反映されます。
+
+#### 終了
+ + コマンドラインでCtrl+Cを押す（プレビューとwatchの終了）
 
