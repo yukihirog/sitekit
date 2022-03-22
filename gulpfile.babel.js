@@ -1,7 +1,6 @@
 import gulp from 'gulp';
 import * as task from './gulp_task'
 
-const tasks = [];
 const taskGroups = {};
 for (const key in task) {
   const groupName = (key.match(/^([^_]*)_/) || [])[1] || key;
@@ -9,6 +8,7 @@ for (const key in task) {
   if (!taskGroups[groupName]) {
     taskGroups[groupName] = [];
   }
+
   const group = taskGroups[groupName];
   group.push(task[key]);
   group[key] = task[key];
