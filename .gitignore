@@ -1,6 +1,7 @@
 03_preview/
 docker/db/data/
 docker/phpmyadmin/sessions/
+docker-compose.yml
 
 # Needless
 Thumbs.db
