@@ -1,5 +1,14 @@
 # sitekit
 
+このリポジトリをforkしてご利用ください。
+
+fork後、アップデートを取り込むためには以下のコマンドが必要です。
+
+    git remote add upstream https://github.com/yukihirog/sitekit.git
+
+Gitのforkについての詳細は`git fork 取り込み`などで検索してください。
+
+
 ## ファイル構成
 
     (git repository)
@@ -33,12 +42,14 @@
 ## 導入方法
 
 ### 1. Node.jsのインストール
+
 以下のサイトから「X.X.X LTS」をダウンロード＆インストールしてください。
 
 https://nodejs.org/
 
 
 #### 古いNode.jsが既にインストールされている場合
+
 以下のコマンドで最新版にアップデートされます。
 
 ```
@@ -46,6 +57,7 @@ npm update -g npm
 ```
 
 ##### nが入っている場合
+
 ```
 n lts
 ```
@@ -111,10 +123,28 @@ Dockerアプリからコンテナ内のMySQLサーバーのコマンドライン
 
     npm run start initfiles
 
+Macを使っていてM1等のApple系チップを使っている場合は`docker-compose.yml`に`platform: ${PLATFORM}`を追加してください。
 
-### 8. fixedディレクトリに必要ファイルを格納する
+    services:
+      my_db_host:
+        build: ./docker/db
+        platform: ${PLATFORM} # 追加
+        :
 
-fixedディレクトリに編集しないが必要なファイルを格納してください。
+      http:
+        build: ./docker/http
+        platform: ${PLATFORM} # 追加
+        :
+
+      phpmyadmin:
+        image: ${PHPMYADMIN_IMAGE}
+        platform: ${PLATFORM} # 追加
+        :
+
+
+### 8. 02_fixedディレクトリに必要ファイルを格納する
+
+02_fixedディレクトリに編集しないが必要なファイルを格納してください。
 
 外部のJSライブラリやWordpress等の本体がこれに該当します。
 
@@ -123,7 +153,7 @@ fixedディレクトリに編集しないが必要なファイルを格納して
 
 コマンドラインから以下を実行してください。
 
-fixedディレクトリの内容がpreviewディレクトリにコピーされます。
+02_fixedディレクトリの内容が03_previewディレクトリにコピーされます。
 
     npm run start build
 

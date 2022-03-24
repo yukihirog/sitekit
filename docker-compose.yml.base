@@ -2,7 +2,6 @@ version: "3"
 services:
   #{DB_HOST}:
     build: ./docker/db
-    platform: ${PLATFORM}
     volumes:
       - ./docker/db/data:/var/lib/mysql
     environment:
@@ -13,7 +12,6 @@ services:
 
   http:
     build: ./docker/http
-    platform: ${PLATFORM}
     volumes:
       - ${PREVIEW_DIR}:/var/www/html
     ports:
@@ -21,7 +19,6 @@ services:
 
   phpmyadmin:
     image: ${PHPMYADMIN_IMAGE}
-    platform: ${PLATFORM}
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=${DB_HOST}
