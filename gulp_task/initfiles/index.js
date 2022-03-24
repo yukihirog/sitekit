@@ -6,7 +6,7 @@ const cwd = process.cwd();
 
 function initDocker() {
   const base = fs.readFileSync(config.docker.yml.input, { encoding: 'utf8' });
-  const yml = base.replace(/#{([^{]+)}/imgs, (matched, envName)=>{
+  const yml = base.replace(/#{([^}]+)}/mg, (matched, envName)=>{
     return process.env[envName] || '';
   });
   fs.writeFileSync(config.docker.yml.output, yml, { encoding: 'utf8' });

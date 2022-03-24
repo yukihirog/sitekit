@@ -22,7 +22,7 @@ Gitのforkについての詳細は`git fork 取り込み`等で検索してく�
         +- 04_release/ : 開発終了時に01_srcから作成されるディレクトリ
         |
         +- docker/ : Docker用のディレクトリ
-        +- docker-compose.yml : Docker用の設定ファイル(最初にnpm run start initfilesで作成する)
+        +- docker-compose.yml : Docker用の設定ファイル(最初にnpm run initfilesで作成する)
         +- docker-compose.yml.base : docker-compose.ymlを生成するテンプレート
         |
         +- gulp_task/ : gulp用のタスクと設定のディレクトリ
@@ -63,16 +63,7 @@ n lts
 ```
 
 
-### 2. .envファイルの作成
-
-`.env.sample`ファイルをコピーして`.env`ファイルを作成してください。
-
-その後、自分の開発環境に合わせて編集してください。
-
-（`.env`ファイルが作成されていない場合は初回の`npm run start`時に、自動的に`.env.sample`ファイルの内容で`.env`ファイルが作成されます）
-
-
-### 3. 開発モジュールのインストール
+### 2. 開発モジュールのインストール
 
 コマンドラインから以下を実行してください。
 
@@ -80,7 +71,23 @@ n lts
     npm install
 
 
-### 4. Dockerのインストール
+### 3. .envファイルの作成と編集
+
+`.env.sample`ファイルをコピーして`.env`ファイルを作成し、自分の開発環境に合わせて編集してください。
+
+
+### 4. 初期化
+
+コマンドラインから以下を実行してください。
+
+空のディレクトリや設定ファイルが作成されます。
+
+    npm run initfiles
+
+（Macを使っていてM1等のApple系チップを使っている場合は`docker-compose.yml`ファイルから`#platform: ${PLATFORM}`の`#`を削除してください）
+
+
+### 5. Dockerのインストール
 
 以下のサイトから「Docker Desktop」をダウンロード＆インストールしてください。
 
@@ -93,7 +100,7 @@ Dockerは必須ではありません。
 データベースやPHPが必要なければ、sitekitではBrowserSyncを使ったプレビューも可能です。
 
 
-### 5. Dockerコンテナの作成
+### 6. Dockerコンテナの作成
 
 Dockerアプリを起動した後、コマンドラインから以下を実行してください。
 
@@ -108,17 +115,6 @@ MySQLサーバーが完全に起動するまで数十秒程度かかる場合が
     Version: '5.7.37'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
 
 このログが確認できるまでphpMyAdmin等からDBにアクセスできません。
-
-
-### 6. 初期化
-
-コマンドラインから以下を実行してください。
-
-空のディレクトリや設定ファイルが作成されます。
-
-    npm run initfiles
-
-（Macを使っていてM1等のApple系チップを使っている場合は`docker-compose.yml`ファイルから`#platform: ${PLATFORM}`の`#`を削除してください）
 
 
 ### 7. 02_fixedディレクトリに必要ファイルを格納する
@@ -193,3 +189,15 @@ MySQLサーバーが完全に起動するまで数十秒程度かかる場合が
     npm run release
 
 
+## 注意
+
+ * `.gitignore`ファイルに`.env`と`docker-compose.yml`の記述があります。
+   * これらのファイルに既存サイトの設定などが記述されることも考慮しているため、外部ユーザーにログイン情報等が漏れないように設計したためです。
+ * `.gitignore`ファイルに`02_fixed/**/.htaccess`、`02_fixed/**/wp-config.php`の記述があります。
+   * これは`02_fixed`ディレクトリに既存サイトの設定ファイルなどが保存されることも考慮しているため、外部ユーザーにログイン情報等が漏れないように設計したためです。
+   * これらのファイルは`01_src`ディレクトリにプレビュー用のファイルを作成してください。
+ * `release`コマンドは`04_release`ディレクトリに`.htaccess`と`wp-config.php`を意図的に出力しません。
+   * これは`01_src`ディレクトリに開発用の`.htaccess`と`wp-config.php`を配置するように設計したためです。
+   * 本番サーバーにほとんどアップロードする機会がないことも理由のひとつです。
+   * 変更したい場合は`gulp_task/config.js`の`ignore.release`を編集してください。
+ * `.gitignore`ファイルに`03_preview`ディレクトリの記述があります。
