@@ -189,7 +189,7 @@ MySQLサーバーが完全に起動するまで数十秒程度かかる場合が
     # サーバーはDocker
     npm run dev
 
-    # 04_releaseディレクトリを空にした後、02_fixedのファイル、01_srcからの出力の順にファイルを書き込み
+    # 04_releaseディレクトリを空にした後、01_srcからの出力ファイルを書き込み
     npm run release
 
 
