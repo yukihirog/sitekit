@@ -6,7 +6,7 @@ fork後、アップデートを取り込むためには以下のコマンドが�
 
     git remote add upstream https://github.com/yukihirog/sitekit.git
 
-Gitのforkについての詳細は`git fork 取り込み`などで検索してください。
+Gitのforkについての詳細は`git fork 取り込み`等で検索してください。
 
 
 ## ファイル構成
@@ -101,61 +101,40 @@ Dockerアプリを起動した後、コマンドラインから以下を実行�
 
     docker compose up -d
 
+MySQLサーバーが完全に起動するまで数十秒程度かかる場合があります。
 
-### 6. DockerコンテナのMySqlにログイン
+起動の確認は、DockerアプリのDBコンテナのLOGSに以下が出力されるのを待ってください。
 
-Dockerアプリからコンテナ内のMySQLサーバーのコマンドラインを起動してください。
+    Version: '5.7.37'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
 
-そのコマンドラインで以下を実行してください。
-
-（Dockerを使わない場合は不要です）
-
-    mysql -u root
-
-（現在のsitekitでは、一度ログインしておかないと接続できない問題があります）
+このログが確認できるまでphpMyAdmin等からDBにアクセスできません。
 
 
-### 7. build
+### 6. 初期化
 
 コマンドラインから以下を実行してください。
 
 空のディレクトリや設定ファイルが作成されます。
 
-    npm run start initfiles
+    npm run initfiles
 
-Macを使っていてM1等のApple系チップを使っている場合は`docker-compose.yml`に`platform: ${PLATFORM}`を追加してください。
-
-    services:
-      my_db_host:
-        build: ./docker/db
-        platform: ${PLATFORM} # 追加
-        :
-
-      http:
-        build: ./docker/http
-        platform: ${PLATFORM} # 追加
-        :
-
-      phpmyadmin:
-        image: ${PHPMYADMIN_IMAGE}
-        platform: ${PLATFORM} # 追加
-        :
+（Macを使っていてM1等のApple系チップを使っている場合は`docker-compose.yml`ファイルから`#platform: ${PLATFORM}`の`#`を削除してください）
 
 
-### 8. 02_fixedディレクトリに必要ファイルを格納する
+### 7. 02_fixedディレクトリに必要ファイルを格納する
 
 02_fixedディレクトリに編集しないが必要なファイルを格納してください。
 
 外部のJSライブラリやWordpress等の本体がこれに該当します。
 
 
-### 9. build
+### 8. build
 
 コマンドラインから以下を実行してください。
 
 02_fixedディレクトリの内容が03_previewディレクトリにコピーされます。
 
-    npm run start build
+    npm run build
 
 
 ## 起動と終了
@@ -165,9 +144,11 @@ Macを使っていてM1等のApple系チップを使っている場合は`docker
  + Dockerアプリを起動する
  + `cd このディレクトリ`
  + `docker compose up -d` （Dockerコンテナの起動）
- + `npm run start docker` （プレビューとwatchの終了）
-   * この時点でブラウザが起動し、watch（ファイル更新の監視）が始まります。
+   * phpMyAdminには http://localhost:4040 でアクセスできます。
+ + `npm run dev` （プレビューとwatchの起動）
+   * この時点でブラウザ（+BrowserSync）が起動し、watch（ファイル更新の監視）が始まります。
    * 01_srcディレクトリで開発を進めると、03_previewディレクトリに内容が反映されます。
+   * ブラウザでは、BrowserSyncを通してDockerのサーバーを閲覧しています。
 
 #### 終了
 
@@ -177,11 +158,38 @@ Macを使っていてM1等のApple系チップを使っている場合は`docker
 ### BrowserSyncを使用する場合（Dockerを使用しない場合）
 
  + `cd このディレクトリ`
- + `npm run start watch`
-   * この時点でブラウザが起動し、watch（ファイル更新の監視）が始まります。
+ + `npm run devBS`
+   * この時点でブラウザ（+BrowserSync）が起動し、watch（ファイル更新の監視）が始まります。
    * 01_srcディレクトリで開発を進めると、03_previewディレクトリに内容が反映されます。
 
 #### 終了
 
  + コマンドラインでCtrl+Cを押す（プレビューとwatchの終了）
+
+
+## npmコマンド一覧
+
+    # npm run start build のようにタスク名をつなげて呼び出すことができます
+    npm run start
+
+    # 初期化
+    npm run initfiles
+
+    # 03_previewディレクトリに02_fixedのファイル、01_srcからの出力の順にファイルを書き込み
+    npm run build
+
+    # 03_previewディレクトリを空にした後、buildを実行
+    npm run clearbuild
+
+    # buildを実行し、BrowserSyncとwatchの起動
+    # サーバーはBrowserSync
+    npm run devBS
+
+    # buildを実行し、BrowserSyncとwatchの起動
+    # サーバーはDocker
+    npm run dev
+
+    # 04_releaseディレクトリを空にした後、02_fixedのファイル、01_srcからの出力の順にファイルを書き込み
+    npm run release
+
 

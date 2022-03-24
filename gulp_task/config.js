@@ -10,13 +10,15 @@ const colors = {
   reset: '\u001b[0m'
 }
 
+const pathConfig = {
+  src: path.resolve(cwd, '01_src'),
+  fixed: path.resolve(cwd, '02_fixed'),
+  preview: path.resolve(cwd, process.env.PREVIEW_DIR),
+  release: path.resolve(cwd, '04_release')
+};
+
 export default {
-  path: {
-    src: path.resolve(cwd, '01_src'),
-    fixed: path.resolve(cwd, '02_fixed'),
-    preview: path.resolve(cwd, process.env.PREVIEW_DIR),
-    release: path.resolve(cwd, '04_release')
-  },
+  path: pathConfig,
   ignore: {
     build: [],
     watch: [],
@@ -32,13 +34,33 @@ export default {
       output: path.resolve(cwd, 'docker-compose.yml'),
     }
   },
+  browserSync: {
+    plain: {
+      watch: true,
+      server: {
+        baseDir: pathConfig.preview,
+        index: 'index.html'
+      },
+      notify: false,
+      ghostMode: false
+    },
+    proxy: {
+      proxy: 'localhost' + (process.env.PREVIEW_EXTERNAL_PORT ? ':' + process.env.PREVIEW_EXTERNAL_PORT : ''),
+      port: 80,
+      watch: true,
+      files: '**/*',
+      notify: false,
+      ghostMode: false
+    }
+  },
   needs: [
     path.resolve(cwd, 'docker/db/data'),
+    path.resolve(cwd, 'docker/db/entry'),
     path.resolve(cwd, 'docker/phpmyadmin/sessions'),
-    path.resolve(cwd, '01_src'),
-    path.resolve(cwd, '02_fixed'),
-    path.resolve(cwd, process.env.PREVIEW_DIR),
-    path.resolve(cwd, '04_release'),
+    pathConfig.src,
+    pathConfig.fixed,
+    pathConfig.preview,
+    pathConfig.release
   ],
   plumberHandler: {
     errorHandler: function(err) {

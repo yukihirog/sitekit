@@ -1,3 +1,4 @@
+.env
 03_preview/
 docker/db/data/
 docker/phpmyadmin/sessions/
@@ -62,9 +63,6 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
-
-# dotenv environment variables file
-.env
 
 # next.js build output
 .next

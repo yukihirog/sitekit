@@ -3,30 +3,12 @@ import config from '../config';
 
 export function preview_plain(done) {
   const previewer = browserSync.create();
-
-  previewer.init({
-    watch: true,
-    server: {
-      baseDir: config.path.preview,
-      index: 'index.html'
-    },
-    notify: false,
-    ghostMode: false
-  });
-
+  previewer.init(config.browserSync.plain);
   done();
 }
 
 export function preview_docker(done) {
   const previewer = browserSync.create();
-
-  previewer.init({
-    proxy: 'localhost',
-    watch: true,
-    files: '**/*',
-    notify: false,
-    ghostMode: false
-  });
-
+  previewer.init(config.browserSync.proxy);
   done();
 }

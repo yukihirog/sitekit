@@ -1,28 +1,28 @@
-version: "3"
+version: "2.3"
 services:
   #{DB_HOST}:
+    env_file: .env
     build: ./docker/db
+    #platform: ${PLATFORM}
     volumes:
       - ./docker/db/data:/var/lib/mysql
-    environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-      - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - ./docker/db/entry:/docker-entrypoint-initdb.d
 
   http:
+    env_file: .env
     build: ./docker/http
+    depends_on:
+      - ${DB_HOST}
     volumes:
       - ${PREVIEW_DIR}:/var/www/html
     ports:
       - ${PREVIEW_EXTERNAL_PORT}:${PREVIEW_INTERNAL_PORT}
 
   phpmyadmin:
+    env_file: .env
     image: ${PHPMYADMIN_IMAGE}
-    environment:
-      - PMA_ARBITRARY=1
-      - PMA_HOST=${DB_HOST}
-      - PMA_USER=root
+    depends_on:
+      - ${DB_HOST}
     links:
       - ${DB_HOST}
     ports:

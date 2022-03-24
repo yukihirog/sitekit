@@ -1,11 +1,16 @@
 {
   "name": "sitekit",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node --es-module-specifier-resolution=node index",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "initfiles": "node --es-module-specifier-resolution=node index initfiles",
+    "build": "node --es-module-specifier-resolution=node index build",
+    "clearbuild": "node --es-module-specifier-resolution=node index clearbuild",
+    "devBS": "node --es-module-specifier-resolution=node index devBS",
+    "dev": "node --es-module-specifier-resolution=node index dev",
+    "release": "node --es-module-specifier-resolution=node index release"
   },
   "repository": {
     "type": "git",

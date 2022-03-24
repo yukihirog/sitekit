@@ -23,7 +23,12 @@ export const build = gulp.series(
   )
 )
 
-export const watch = gulp.series(
+export const clearbuild = gulp.series(
+  taskGroups.clear.clear_preview,
+  build
+)
+
+export const devBS = gulp.series(
   build,
   gulp.parallel(
     ...taskGroups.watch,
@@ -31,17 +36,12 @@ export const watch = gulp.series(
   )
 )
 
-export const docker = gulp.series(
+export const dev = gulp.series(
   build,
   gulp.parallel(
     ...taskGroups.watch,
     taskGroups.preview.preview_docker
   )
-)
-
-export const deploy = gulp.series(
-  taskGroups.clear.clear_preview,
-  build
 )
 
 export const release = gulp.series(
@@ -52,5 +52,5 @@ export const release = gulp.series(
 )
 
 export default gulp.series(
-  watch
+  devBS
 )
