@@ -1,4 +1,6 @@
 .env
+02_fixed/**/.htaccess
+02_fixed/**/wp-config.php
 03_preview/
 docker/db/data/
 docker/phpmyadmin/sessions/
