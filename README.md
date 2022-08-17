@@ -1,40 +1,37 @@
 # sitekit
 
-このリポジトリをforkしてご利用ください。
-
-fork後、アップデートを取り込むためには以下のコマンドが必要です。
-
-    git remote add upstream https://github.com/yukihirog/sitekit.git
-
-Gitのforkについての詳細は`git fork 取り込み`等で検索してください。
-
 
 ## ファイル構成
 
     (git repository)
-        +- .env : Dockerとgulpの共有設定ファイル(最初に手作業で作成する)
-        +- .env.sample : .envを作成する際の雛形
+        |
+        +- .browserslistrc : CSSのベンダープレフィックス等に関連する、対応ブラウザの範囲指定
+        +- .editorconfig : エディタ向けのフォーマット設定
         +- .gitignore : Git登録の除外ファイル指定
+        +- .node-version : Node.jsの使用バージョン
         |
-        +- 01_src/ : 開発用ファイルのディレクトリ
-        +- 02_fixed/ : 開発時に編集しないファイルのディレクトリ
-        +- 03_preview/ : ローカルプレビュー用のディレクトリ(01_srcと02_fixedから作成)
-        +- 04_release/ : 開発終了時に01_srcから作成されるディレクトリ
+        +- config/ : 設定ファイルのディレクトリ
         |
-        +- docker/ : Docker用のディレクトリ
-        +- docker-compose.yml : Docker用の設定ファイル(最初にnpm run initfilesで作成する)
-        +- docker-compose.yml.base : docker-compose.ymlを生成するテンプレート
+        +- src/ : 開発用ディレクトリ
+        +- dest/ : 出力ディレクトリ
         |
-        +- gulp_task/ : gulp用のタスクと設定のディレクトリ
+        +- gulptask/ : gulp用のタスクと設定のディレクトリ
         +- gulpfile.babel.js : 開発環境の実行内容を記述したファイル
         +- index.js : nodeの実行ファイル(gulp-cliの呼び出し)
         |
-        +- LICENSE : ライセンス
-        |
-        +- node_modules/ : 開発用モジュール（install.bat/install.commandを実行時に作成されます）
+        +- node_modules/ : 開発用モジュール(最初にnpm installで作成)
         |
         +- package-lock.json : 開発用モジュールの指定ファイル
         +- package.json : 開発用モジュールの指定ファイル
+        |
+        +- npm_install.bat : npm installのコマンドファイル（Windows用）
+        +- npm_install.command : npm installのコマンドファイル（Mac用）
+        |
+        +- npm_run_dev.bat : npm run devのコマンドファイル（Windows用）
+        +- npm_run_dev.command : npm run devのコマンドファイル（Mac用）
+        |
+        +- npm_run_release.bat : npm run releaseのコマンドファイル（Windows用）
+        +- npm_run_release.command : npm run releaseのコマンドファイル（Mac用）
         |
         +- README.md : この説明ファイル
 
@@ -48,21 +45,6 @@ Gitのforkについての詳細は`git fork 取り込み`等で検索してく�
 https://nodejs.org/
 
 
-#### 古いNode.jsが既にインストールされている場合
-
-以下のコマンドで最新版にアップデートされます。
-
-```
-npm update -g npm
-```
-
-##### nが入っている場合
-
-```
-n lts
-```
-
-
 ### 2. 開発モジュールのインストール
 
 コマンドラインから以下を実行してください。
@@ -71,94 +53,16 @@ n lts
     npm install
 
 
-### 3. .envファイルの作成と編集
-
-`.env.sample`ファイルをコピーして`.env`ファイルを作成し、自分の開発環境に合わせて編集してください。
-
-
-### 4. 初期化
-
-コマンドラインから以下を実行してください。
-
-空のディレクトリや設定ファイルが作成されます。
-
-    npm run initfiles
-
-（Macを使っていてM1等のApple系チップを使っている場合は`docker-compose.yml`ファイルから`#platform: ${PLATFORM}`の`#`を削除してください）
-
-
-### 5. Dockerのインストール
-
-以下のサイトから「Docker Desktop」をダウンロード＆インストールしてください。
-
-（Dockerを使わない場合は不要です）
-
-https://www.docker.com/get-started/
-
-Dockerは必須ではありません。
-
-データベースやPHPが必要なければ、sitekitではBrowserSyncを使ったプレビューも可能です。
-
-
-### 6. Dockerコンテナの作成
-
-Dockerアプリを起動した後、コマンドラインから以下を実行してください。
-
-（Dockerを使わない場合は不要です）
-
-    docker compose up -d
-
-MySQLサーバーが完全に起動するまで数十秒程度かかる場合があります。
-
-起動の確認は、DockerアプリのDBコンテナのLOGSに以下が出力されるのを待ってください。
-
-    Version: '5.7.37'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
-
-このログが確認できるまでphpMyAdmin等からDBにアクセスできません。
-
-
-### 7. 02_fixedディレクトリに必要ファイルを格納する
-
-02_fixedディレクトリに編集しないが必要なファイルを格納してください。
-
-外部のJSライブラリやWordpress等の本体がこれに該当します。
-
-
-### 8. build
-
-コマンドラインから以下を実行してください。
-
-02_fixedディレクトリの内容が03_previewディレクトリにコピーされます。
-
-    npm run build
-
-
 ## 起動と終了
 
-### Dockerを使用する場合
-
- + Dockerアプリを起動する
- + `cd このディレクトリ`
- + `docker compose up -d` （Dockerコンテナの起動）
-   * phpMyAdminには http://localhost:4040 でアクセスできます。
- + `npm run dev` （プレビューとwatchの起動）
-   * この時点でブラウザ（+BrowserSync）が起動し、watch（ファイル更新の監視）が始まります。
-   * 01_srcディレクトリで開発を進めると、03_previewディレクトリに内容が反映されます。
-   * ブラウザでは、BrowserSyncを通してDockerのサーバーを閲覧しています。
-
-#### 終了
-
- + コマンドラインでCtrl+Cを押す（プレビューとwatchの終了）
- + `docker compose down` （Dockerコンテナの終了）
-
-### BrowserSyncを使用する場合（Dockerを使用しない場合）
+### 起動
 
  + `cd このディレクトリ`
- + `npm run devBS`
+ + `npm run dev`
    * この時点でブラウザ（+BrowserSync）が起動し、watch（ファイル更新の監視）が始まります。
-   * 01_srcディレクトリで開発を進めると、03_previewディレクトリに内容が反映されます。
+   * srcディレクトリで開発を進めると、destディレクトリに内容が反映されます。
 
-#### 終了
+### 終了
 
  + コマンドラインでCtrl+Cを押す（プレビューとwatchの終了）
 
@@ -168,24 +72,13 @@ MySQLサーバーが完全に起動するまで数十秒程度かかる場合が
     # npm run start build のようにタスク名をつなげて呼び出すことができます
     npm run start
 
-    # 初期化
-    npm run initfiles
-
-    # 03_previewディレクトリに02_fixedのファイル、01_srcからの出力の順にファイルを書き込み
+    # srcからdestに出力
     npm run build
 
-    # 03_previewディレクトリを空にした後、buildを実行
-    npm run clearbuild
-
     # buildを実行し、BrowserSyncとwatchの起動
-    # サーバーはBrowserSync
-    npm run devBS
-
-    # buildを実行し、BrowserSyncとwatchの起動
-    # サーバーはDocker
     npm run dev
 
-    # 04_releaseディレクトリを空にした後、01_srcからの出力ファイルを書き込み
+    # destディレクトリを削除した後、srcからdestに出力（リリース用、.mapファイルなどを作らない）
     npm run release
 
 

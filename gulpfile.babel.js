@@ -1,56 +1,15 @@
-import gulp from 'gulp';
-import * as task from './gulp_task'
+import fs from 'fs';
+import config from './config/index.js';
+import { default as gulp } from 'gulp';
+import gulptask from './gulptask/index.js';
 
-const taskGroups = {};
-for (const key in task) {
-  const groupName = (key.match(/^([^_]*)_/) || [])[1] || key;
-
-  if (!taskGroups[groupName]) {
-    taskGroups[groupName] = [];
-  }
-
-  const group = taskGroups[groupName];
-  group.push(task[key]);
-  group[key] = task[key];
+if (!fs.existsSync(config.src)) {
+  fs.mkdirSync(config.src, { recursive: true });
 }
 
-export * from './gulp_task'
+if (!fs.existsSync(config.dest)) {
+  fs.mkdirSync(config.dest, { recursive: true });
+}
 
-export const build = gulp.series(
-  taskGroups.deploy.deploy_fixed,
-  gulp.parallel(
-    ...taskGroups.build
-  )
-)
-
-export const clearbuild = gulp.series(
-  taskGroups.clear.clear_preview,
-  build
-)
-
-export const devBS = gulp.series(
-  build,
-  gulp.parallel(
-    ...taskGroups.watch,
-    taskGroups.preview.preview_plain
-  )
-)
-
-export const dev = gulp.series(
-  build,
-  gulp.parallel(
-    ...taskGroups.watch,
-    taskGroups.preview.preview_docker
-  )
-)
-
-export const release = gulp.series(
-  taskGroups.clear.clear_release,
-  gulp.parallel(
-    ...taskGroups.release
-  )
-)
-
-export default gulp.series(
-  devBS
-)
+gulp.task('default', gulptask.bundle.dev);
+export default gulp.series('default')
