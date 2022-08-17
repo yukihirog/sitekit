@@ -48,8 +48,5 @@
     "sass": "^1.54.4",
     "through2": "^4.0.2"
   },
-  "browserslist": [
-    "> 1% in JP, not dead"
-  ],
   "type": "module"
 }
