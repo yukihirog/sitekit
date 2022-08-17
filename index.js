@@ -1,11 +1,10 @@
 import fs from 'fs';
-import path from 'path';
-import gulpCli from 'gulp-cli';
+import { default as gulpCli } from 'gulp-cli';
 
-const pathDotEnv = path.resolve(process.cwd(), './.env');
-const pathDotEnvSample = path.resolve(process.cwd(), './.env.sample');
-if (!fs.existsSync(pathDotEnv) && fs.existsSync(pathDotEnvSample)) {
-  fs.writeFileSync(pathDotEnv, fs.readFileSync(pathDotEnvSample, { encoding: 'utf8' }), { encoding: 'utf8' });
+const localConfig ='./config/config.local.js';
+const localConfigSample ='./config/config.local.sample.js';
+if (!fs.existsSync(localConfig)) {
+  fs.copyFileSync(localConfigSample, localConfig);
 }
 
 gulpCli();

@@ -1,10 +1,7 @@
 .env
-02_fixed/**/.htaccess
-02_fixed/**/wp-config.php
-03_preview/
-docker/db/data/
-docker/phpmyadmin/sessions/
-docker-compose.yml
+.htaccess
+wp-config.php
+config.local.js
 
 # Needless
 Thumbs.db
