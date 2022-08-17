@@ -43,7 +43,7 @@ gulp.task(taskName, () => {
     .pipe(through2.obj(async (file, encoding, callback) => {
       const inputFile = path.resolve(cwd, file.path);
       // rollupしないファイルの処理
-      if (inputFile.match(/\/(vendor|lib)\//)) {
+      if (inputFile.match(/\/(vendor)\//)) {
         callback(null, file);
         return;
       }
@@ -82,7 +82,11 @@ gulp.task(taskName, () => {
 
       callback(null, file);
     }))
-    .pipe(uglify())
+    .pipe(uglify({
+      output: {
+        comments: 'some'
+      }
+    }))
     .pipe(gulp.dest(config.dest, {
       sourcemaps: useSourceMaps ? '.' : null,
     }))
