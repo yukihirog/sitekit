@@ -24,6 +24,15 @@
         +- package-lock.json : 開発用モジュールの指定ファイル
         +- package.json : 開発用モジュールの指定ファイル
         |
+        +- npm_install.bat : npm installのコマンドファイル（Windows用）
+        +- npm_install.command : npm installのコマンドファイル（Mac用）
+        |
+        +- npm_run_dev.bat : npm run devのコマンドファイル（Windows用）
+        +- npm_run_dev.command : npm run devのコマンドファイル（Mac用）
+        |
+        +- npm_run_release.bat : npm run releaseのコマンドファイル（Windows用）
+        +- npm_run_release.command : npm run releaseのコマンドファイル（Mac用）
+        |
         +- README.md : この説明ファイル
 
 
