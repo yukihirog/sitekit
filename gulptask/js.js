@@ -11,7 +11,7 @@ import rollupBabel from '@rollup/plugin-babel';
 import uglify from 'gulp-uglify';
 
 const taskName = 'js';
-const src = path.resolve(config.src, '**/{index|common}.{js,mjs,cjs}');
+const src = path.resolve(config.src, '**/*.{js,mjs,cjs}');
 const isProduction = config.mode === 'production';
 const useSourceMaps = isProduction ? false : true;
 
@@ -33,6 +33,7 @@ gulp.task(taskName, () => {
     .src(
       src,
       {
+        ignore: ['**/_*', '**/_*/**/*'],
         sourcemaps: useSourceMaps,
       }
     )
@@ -41,6 +42,12 @@ gulp.task(taskName, () => {
     // rollupの処理
     .pipe(through2.obj(async (file, encoding, callback) => {
       const inputFile = path.resolve(cwd, file.path);
+      // rollupしないファイルの処理
+      if (inputFile.match(/\/(vendor|lib)\//)) {
+        callback(null, file);
+        return;
+      }
+
       const currentDir = path.dirname(inputFile);
       const jsPath = inputFile.replace(root, '');
       const destFile = path.resolve(cwd, config.dest) + jsPath;
@@ -56,6 +63,8 @@ gulp.task(taskName, () => {
         file: destFile,
         format: 'iife',
         sourcemap: useSourceMaps,
+        name: path.basename(destFile),
+        exports: 'named'
       });
 
       const lastOutput = output[0];
