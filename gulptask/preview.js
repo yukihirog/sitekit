@@ -16,7 +16,7 @@ gulp.task(taskName, (done) => {
     open: true,
     notify: false,
     ghostMode: false,
-    startPath: config.vars?.global?.startPath,
+    startPath: config.server?.startPath,
     server: {
       baseDir: config.server?.baseDir || '/',
       index: config.server?.index || 'index.html'
@@ -39,7 +39,7 @@ gulp.task(taskName + ':php', (done) => {
         open: true,
         notify: false,
         ghostMode: false,
-        startPath: config.vars?.global?.startPath,
+        startPath: config.server?.startPath,
       });
     }
   );
