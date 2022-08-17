@@ -4,7 +4,11 @@
 ## ファイル構成
 
     (git repository)
+        |
+        +- .browserslistrc : CSSのベンダープレフィックス等に関連する、対応ブラウザの範囲指定
+        +- .editorconfig : エディタ向けのフォーマット設定
         +- .gitignore : Git登録の除外ファイル指定
+        +- .node-version : Node.jsの使用バージョン
         |
         +- config/ : 設定ファイルのディレクトリ
         |
